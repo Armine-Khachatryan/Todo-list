@@ -1,25 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
-
+import MakingAnOrder from './MakingAnOrder';
+import CreatingBouquet from './CreatingBouquet';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <MakingAnOrder/>
+      <CreatingBouquet
+      number={49} 
+      color="pink" 
+      flower="peonies" 
+      />
+      <CreatingBouquet
+      number={53} 
+      color="red" 
+      flower="roses" 
+      />
       </header>
     </div>
   );
 }
-
 export default App;
