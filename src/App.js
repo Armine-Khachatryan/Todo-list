@@ -1,12 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Product} from './Product';
 import MakingAnOrder from './MakingAnOrder';
 import CreatingBouquet from './CreatingBouquet';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+      <Product
+      name='bananas'
+      price='1$'
+      description='Fresh bananas from Ecuador'
+      />
       <MakingAnOrder/>
       <CreatingBouquet
       number={49} 
