@@ -6,7 +6,7 @@ import {Description} from './Description';
 class Product extends Component{
 render () {
     return (
-        <div>
+        <div>Product
         <Name name={this.props.name}/>
         <Price price={this.props.price}/>
         <Description description={this.props.description}/>

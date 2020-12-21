@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 class Description extends Component {
     render (){
         return (
-            <div> description = {this.props.description}</div>
+            <div> description = "{this.props.description}"</div>
         )
     }
 }
