@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 class Name extends Component {
     render (){
+        const {value}=this.props
         return (
-            <div> name = "{this.props.name}"</div>
+            <div> Name:{value}</div>
         )
     }
 }

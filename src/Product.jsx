@@ -1,17 +1,17 @@
-import { render } from '@testing-library/react';
 import React, {Component} from 'react';
 import {Price} from './Price';
 import {Name} from './Name';
 import {Description} from './Description';
 class Product extends Component{
 render () {
+    const{name,price,description}=this.props;
     return (
-        <div>Product
-        <Name name={this.props.name}/>
-        <Price price={this.props.price}/>
-        <Description description={this.props.description}/>
-        </div>
-    )
+        <>
+        <Name value={name}/>
+        <Price value={price}/>
+        <Description value={description}/>
+        </>
+    );
 }
 }
 export{Product};

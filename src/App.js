@@ -10,7 +10,7 @@ function App() {
       <header className="App-header">
       <Product
       name='bananas'
-      price='1$'
+      price='2$'
       description='Fresh bananas from Ecuador'
       />
       <MakingAnOrder/>

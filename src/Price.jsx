@@ -1,9 +1,27 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 class Price extends Component {
-    render (){
-        return (
-            <div> price = "{this.props.price}"</div>
-        )
+    constructor(props) {
+        super(props)
+        this.state = {
+            price: props.value
+        }
     }
+    changeCurrency = () => {
+        let {price} = this.state;
+        let purePrice = parseFloat(price);
+    price = price.includes('$') ? purePrice * 500 + '֏' : purePrice / 500 + '$';
+    this.setState({
+        price: price
+    })
 }
-export {Price};
+render(){
+    const {price} = this.state
+    return (
+        <div>
+            <span>Price:{price}</span>
+            <button onClick={this.changeCurrency}>changeCurrency </button>
+        </div>
+    );
+}
+}
+export { Price };
