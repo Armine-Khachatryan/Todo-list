@@ -1,0 +1,35 @@
+.name {
+    font-size:75px;
+    color:red
+}   
+.toDoListMain .List {
+    list-style: none;
+    padding-left: 10;
+    width: 300px;
+  } 
+
+
+  .toDoListMain .List li {
+    color:brown;
+    background-color: rgba(200,200,255,.5);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    list-style: none;
+  }
+
+  .button {
+    background: red;
+    border-radius: 8px;
+    color: white;
+    font-size:25px;
+  }
+
+  .input{
+     background: white;
+    border-radius: 8px;
+    font-size:25px;
+    color:red; 
+  }
+
+
+

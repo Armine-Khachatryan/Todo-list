@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
 import React, { Component } from 'react';
+import  './styles.css';
 export default class Todo extends Component {
     state = {
         inputValue: "",
@@ -31,16 +31,16 @@ export default class Todo extends Component {
             return <li key={index}>{task}</li>
         })
         return (
-            <div>
-                <h2>ToDo List</h2>
-                <input
+            <div className="toDoListMain">
+                <h2 className='name'>ToDo List</h2>
+                <input className="input"
                     type="text"
                     onChange={this.handleChange}
                 />
-                <button
+                <button className="button"
                     onClick={this.addTask}
                 >Add task</button>
-                <ol>
+                <ol className="List">
                     {taskComponents}
                 </ol>
             </div>
