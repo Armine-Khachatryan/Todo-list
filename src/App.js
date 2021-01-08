@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {Product} from './components/Product';
 import MakingAnOrder from './MakingAnOrder';
 import CreatingBouquet from './CreatingBouquet';
