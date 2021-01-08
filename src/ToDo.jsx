@@ -44,12 +44,13 @@ export default class Todo extends Component {
             </Row>
             <Row>
             <Col
-            xs={2}>
-            <FormControl type="text" className="input"
+            xs={8}>
+            <FormControl type="text" 
             value={this.state.inputValue.title}
              onChange={this.handleChange}/>
             </Col>
-            <Col>
+            <Col
+            xs={4}>
             <Button variant="danger" onClick={this.addTask}>Add task</Button>
             </Col>
             </Row>
