@@ -7,7 +7,6 @@ export default class Todo extends Component {
     state = {
         inputValue: '',
         tasks: [],
-        selectedTasks: []
     };
 
     handleChange = (event) => {
@@ -90,7 +89,7 @@ export default class Todo extends Component {
                             <InputGroup className="mb-3">
                                 <FormControl
                                     placeholder="Input your task"
-                                    value={inputValue}
+                                    value={this.state.inputValue}
                                     onChange={this.handleChange}
                                 />
                                 <InputGroup.Append>
