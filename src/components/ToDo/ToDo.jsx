@@ -103,7 +103,7 @@ export default class Todo extends Component {
                             </InputGroup>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="justify-content-center">
                         {taskComponents}
                     </Row>
                 </Container>
