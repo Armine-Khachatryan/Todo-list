@@ -7,6 +7,7 @@ export default class Todo extends Component {
     state = {
         inputValue: '',
         tasks: [],
+        selectedTasks:new Set()
     };
 
     handleChange = (event) => {
@@ -45,8 +46,41 @@ export default class Todo extends Component {
         });
     };
 
+    toggleTask=(taskId) => {
+        const selectedTasks=new Set(this.state.selectedTasks)
+        if (selectedTasks.has(taskId)){
+            selectedTasks.delete(taskId);
+        }
+        else {
+            selectedTasks.add(taskId);
+        }
+        this.setState({
+            selectedTasks
+        });
+    };
+
+    removeSelected=()=> {
+        const{tasks,selectedTasks}=this.state;
+        const newTasks=tasks.filter((task)=>{
+            if(selectedTasks.has(task._id)) {
+                return false;
+            }
+            return true;
+            });
+     this.setState({
+         tasks:newTasks,
+         selectedTasks:new Set()
+     });
+    };
+
+    handleKeyDown=(event)=> {
+        if(event.key==="Enter"){
+            this.addTask();
+        }
+    };
+
     render() {
-        const { tasks, inputValue } = this.state;
+        const { tasks, inputValue, selectedTasks } = this.state;
 
         const taskComponents = tasks.map((task) => {
 
@@ -62,12 +96,16 @@ export default class Todo extends Component {
                     <Card className={styles.task}>
 
                         <Card.Body>
+                        <input
+                        type="checkbox"
+                        onChange={()=>this.toggleTask(task._id)}/>
                             <Card.Title>{task.title}</Card.Title>
                             <Card.Text>
                                 Some quick example text to build on the card title and
                   </Card.Text>
                             <Button
                                 variant="danger"
+                                disabled={!!selectedTasks.size}
                                 onClick={() => this.deleteTask(task._id)}
                             >
                                 Delete
@@ -89,19 +127,32 @@ export default class Todo extends Component {
                             <InputGroup className="mb-3">
                                 <FormControl
                                     placeholder="Input your task"
-                                    value={this.state.inputValue}
+                                    value={inputValue}
                                     onChange={this.handleChange}
+                                    onKeyDown = {this.handleKeyDown}
+                                    disabled={!!selectedTasks.size}
                                 />
                                 <InputGroup.Append>
                                     <Button
                                         variant="outline-primary"
                                         onClick={this.addTask}
+                                        disabled={!!selectedTasks.size}
                                     >
                                         Add
                                     </Button>
                                 </InputGroup.Append>
                             </InputGroup>
                         </Col>
+                    </Row>
+                    <Row>
+                        <Button
+                            variant="danger"
+                            onClick={this.removeSelected}
+                            disabled={!selectedTasks.size}
+                        >
+                            Delete selected
+                        </Button>
+
                     </Row>
                     <Row className="justify-content-center">
                         {taskComponents}
