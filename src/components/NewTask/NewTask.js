@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {Button, FormControl, InputGroup } from 'react-bootstrap';
 import idGenerator from '../../heplers/idGenerator';
-import styles from './newTaskStyle.module.css';
+//import styles from './newTaskStyle.module.css';
 
 class NewTask extends Component{ 
 state={
     title:" ",
-    description:" " 
 }
 
 handleChange=(event)=>{
@@ -24,7 +23,6 @@ handleKeyDown=(event)=> {
 
 handleSubmit = ()=>{
     const title = this.state.title.trim();
-    const description = this.state.description.trim();
 
     if (!title) {
         return;
@@ -33,20 +31,18 @@ handleSubmit = ()=>{
     const newTask = {
         _id: idGenerator(),
         title,
-        description
     };
 
     this.props.onAdd(newTask);
     this.setState({
         title: '',
-        description: ''
     });
 };
 
 
 
 render(){
-    const{title,description}=this.state;
+    const{title}=this.state;
     const { disabled} = this.props;
 return(
     <InputGroup className="mb-3">

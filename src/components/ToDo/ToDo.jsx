@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button} from 'react-bootstrap';
-import idGenerator from '../../heplers/idGenerator';
 import Task from '../Task/Task';
 import NewTask from '../NewTask/NewTask'
 
@@ -59,7 +58,7 @@ export default class Todo extends Component {
    
 
     render() {
-        const { tasks, inputValue, selectedTasks } = this.state;
+        const { tasks, selectedTasks } = this.state;
 
         const taskComponents = tasks.map((task) => {
 
@@ -75,7 +74,7 @@ export default class Todo extends Component {
                 <Task data={task}
                 onToggle={this.toggleTask}
                 disabled={!!selectedTasks.size}
-                OnDelete={this.deleteTask}
+                onDelete={this.deleteTask}
                 />
                 </Col>
             )
