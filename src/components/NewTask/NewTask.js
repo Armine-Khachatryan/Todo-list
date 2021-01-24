@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Button, FormControl, InputGroup } from 'react-bootstrap';
 import idGenerator from '../../heplers/idGenerator';
+import PropTypes from "prop-types";
 //import styles from './newTaskStyle.module.css';
 
 class NewTask extends Component{ 
@@ -65,5 +66,9 @@ return(
     </InputGroup>
 )
 }
+}
+NewTask.propTypes={
+    onAdd:PropTypes.func.isRequired,
+    disabled:PropTypes.bool.isRequired
 }
 export default NewTask;
