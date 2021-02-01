@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
-import idGenerator from '../../heplers/idGenerator';
 import PropTypes from "prop-types";
 //import styles from './newTaskStyle.module.css';
 
@@ -33,7 +32,6 @@ class NewTask extends Component {
         }
 
         const newTask = {
-            _id: idGenerator(),
             title,
             description
         };

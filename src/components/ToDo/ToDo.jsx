@@ -13,186 +13,309 @@ export default class Todo extends Component {
         openNewTaskModal: false,
         editTask: null
     };
+    componentDidMount(){
+        fetch('http://localhost:3001/task', {
+            method: 'GET',
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+            .then(async (response) => {
+                const res = await response.json();
 
+                if(response.status >=400 && response.status < 600){
+                    if(res.error){
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
+
+                this.setState({
+                    tasks: res
+                });
+
+            })
+            .catch((error)=>{
+                console.log('catch error', error);
+            });
+
+    }
 
     addTask = (newTask) => {
 
-        const tasks = [...this.state.tasks, newTask];
-
-
-        this.setState({
-            tasks,
-            openNewTaskModal: false
-        });
-    };
-
-    deleteTask = (taskId) => {
-        const newTasks = this.state.tasks.filter((task) => taskId !== task._id);
-
-        this.setState({
-            tasks: newTasks
-        });
-    };
-
-    toggleTask = (taskId) => {
-        const selectedTasks = new Set(this.state.selectedTasks)
-        if (selectedTasks.has(taskId)) {
-            selectedTasks.delete(taskId);
-        }
-        else {
-            selectedTasks.add(taskId);
-        }
-        this.setState({
-            selectedTasks
-        });
-    };
-
-    removeSelected = () => {
-        const { tasks, selectedTasks } = this.state;
-        const newTasks = tasks.filter((task) => {
-            if (selectedTasks.has(task._id)) {
-                return false;
+        fetch('http://localhost:3001/task', {
+            method: 'POST',
+            body: JSON.stringify(newTask),
+            headers: {
+                "Content-Type": 'application/json'
             }
-            return true;
-        });
-        this.setState({
-            tasks: newTasks,
-            selectedTasks: new Set(),
-            showConfirm: false
-        });
+        })
+            .then(async (response) => {
+                const res = await response.json();
+
+                if(response.status >=400 && response.status < 600){
+                    if(res.error){
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
+                
+                const tasks = [...this.state.tasks, res];
+
+                this.setState({
+                    tasks,
+                    openNewTaskModal: false
+                });
+
+            })
+            .catch((error)=>{
+                console.log('catch error', error);
+            });
     };
 
-    toggleConfirm = () => {
-        this.setState({
-            showConfirm: !this.state.showConfirm
-        })
+      
+
+        deleteTask = (taskId) => {
+            fetch(`http://localhost:3001/task/${taskId}`, {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            })
+                .then(async (response) => {
+                    const res = await response.json();
+    
+                    if(response.status >=400 && response.status < 600){
+                        if(res.error){
+                            throw res.error;
+                        }
+                        else {
+                            throw new Error('Something went wrong!');
+                        }
+                    }
+                    
+            const newTasks = this.state.tasks.filter((task) => taskId !== task._id);
+    
+            this.setState({
+                tasks: newTasks
+            });
+                })
+                .catch((error)=>{
+                    console.log('catch error', error);
+                });
+        };
+
+
+
+        toggleTask = (taskId) => {
+            const selectedTasks = new Set(this.state.selectedTasks)
+            if (selectedTasks.has(taskId)) {
+                selectedTasks.delete(taskId);
+            }
+            else {
+                selectedTasks.add(taskId);
+            }
+            this.setState({
+                selectedTasks
+            });
+        };
+
+        removeSelected = (task) => {        
+            const { tasks, selectedTasks } = this.state;
+            const newTasks = tasks.filter((task) => {
+                if (selectedTasks.has(task._id)) {
+                    return false;
+                }
+                return true;
+            });
+            this.setState({
+                tasks: newTasks,
+                selectedTasks: new Set(),
+                showConfirm: false
+            });
     }
 
-    selectAll = () => {
-        const taskIds = this.state.tasks.map((task) => task._id);
-        this.setState({
-            selectedTasks: new Set(taskIds)
-        });
-    };
+        toggleConfirm = () => {
+            this.setState({
+                showConfirm: !this.state.showConfirm
+            })
+        }
 
-    deSelectAll = () => {
-        this.setState({
-            selectedTasks: new Set()
-        });
-    };
+        selectAll = () => {
+            const taskIds = this.state.tasks.map((task) => task._id);
+            this.setState({
+                selectedTasks: new Set(taskIds)
+            });
+        };
 
-    toggleNewTaskModal = () => {
-        this.setState({
-            openNewTaskModal: !this.state.openNewTaskModal
-        });
-    };
+        deSelectAll = () => {
+            this.setState({
+                selectedTasks: new Set()
+            });
+        };
 
-    handleEdit = (editTask) => {
-        this.setState({ editTask });
-    };
-    handleSaveTask = (editedTask) => {
-        const tasks = [...this.state.tasks];
-        const foundIndex = tasks.findIndex((task) => task._id === editedTask._id);
-        tasks[foundIndex] = editedTask;
+        toggleNewTaskModal = () => {
+            this.setState({
+                openNewTaskModal: !this.state.openNewTaskModal
+            });
+        };
 
-        this.setState({
-            tasks,
-            editTask: null
-        });
-    };
+        handleEdit = (editTask) => {
+            fetch(`http://localhost:3001/task/${editTask._id}`, {
+                method: 'PUT',
+                body: JSON.stringify(editTask),
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            })
+                .then(async (response) => {
+                    const res = await response.json();
+    
+                    if(response.status >=400 && response.status < 600){
+                        if(res.error){
+                            throw res.error;
+                        }
+                        else {
+                            throw new Error('Something went wrong!');
+                        }
+                    }
+                    this.setState({editTask});
+                })
+                     .catch((error)=>{
+                    console.log('catch error', error);
+                });
+        };
 
-    render() {
-        const { tasks, selectedTasks, showConfirm, openNewTaskModal, editTask } = this.state;
 
-        const taskComponents = tasks.map((task) => {
+        handleSaveTask = (editedTask) => {
+            fetch(`http://localhost:3001/task/${editedTask._id}`, {
+                method: 'PUT',
+                body: JSON.stringify(editedTask),
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            })
+                .then(async (response) => {
+                    const res = await response.json();
+    
+                    if(response.status >=400 && response.status < 600){
+                        if(res.error){
+                            throw res.error;
+                        }
+                        else {
+                            throw new Error('Something went wrong!');
+                        }
+                    }
+                    const tasks = [...this.state.tasks];
+                    const foundIndex = tasks.findIndex((task) => task._id === editedTask._id);
+                    tasks[foundIndex] = editedTask;
+        
+                    this.setState({
+                        tasks,
+                        editTask: null
+                    });
+                })
+                     .catch((error)=>{
+                    console.log('catch error', error);
+                });
+        };
+
+        render() {
+            const { tasks, selectedTasks, showConfirm, openNewTaskModal, editTask } = this.state;
+
+            const taskComponents = tasks.map((task) => {
+
+                return (
+                    <Col
+                        key={task._id}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                        xl={2}
+                    >
+                        <Task data={task}
+                            onToggle={this.toggleTask}
+                            disabled={!!selectedTasks.size}
+                            onDelete={this.deleteTask}
+                            selected={selectedTasks.has(task._id)}
+                            onEdit={this.handleEdit}
+                        />
+                    </Col>
+                )
+            });
+        
 
             return (
-                <Col
-                    key={task._id}
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    lg={3}
-                    xl={2}
-                >
-                    <Task data={task}
-                        onToggle={this.toggleTask}
-                        disabled={!!selectedTasks.size}
-                        onDelete={this.deleteTask}
-                        selected={selectedTasks.has(task._id)}
-                        onEdit={this.handleEdit}
-                    />
-                </Col>
-            )
-        });
-
-        return (
-            <div>
-                <h2>ToDo List</h2>
-                <Container>
-                    <Row className="justify-content-center">
-                        <Col>
-                            <Button
-                                variant="primary"
-                                onClick={this.toggleNewTaskModal}>
-                                Add new Task
+                <div>
+                    <h2>ToDo List</h2>
+                    <Container>
+                        <Row className="justify-content-center">
+                            <Col>
+                                <Button
+                                    variant="primary"
+                                    onClick={this.toggleNewTaskModal}>
+                                    Add new Task
                     </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                variant="warning"
-                                onClick={this.selectAll}
-                            >
-                                Select All
+                            </Col>
+                            <Col>
+                                <Button
+                                    variant="warning"
+                                    onClick={this.selectAll}
+                                >
+                                    Select All
                     </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                variant="warning"
-                                onClick={this.deSelectAll}
-                            >
-                                Deselect All
+                            </Col>
+                            <Col>
+                                <Button
+                                    variant="warning"
+                                    onClick={this.deSelectAll}
+                                >
+                                    Deselect All
                     </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                variant="danger"
-                                onClick={this.toggleConfirm}
-                                disabled={!selectedTasks.size}
-                            >
-                                Delete selected
+                            </Col>
+                            <Col>
+                                <Button
+                                    variant="danger"
+                                    onClick={this.toggleConfirm}
+                                    disabled={!selectedTasks.size}
+                                >
+                                    Delete selected
                         </Button>
-                        </Col>
-                    </Row>
-                    <Row className="justify-content-center">
-                        {taskComponents}
-                    </Row>
-                </Container>
-                {showConfirm &&
-                    <Confirm
-                        onClose={this.toggleConfirm}
-                        onConfirm={this.removeSelected}
-                        count={selectedTasks.size}
-                    />
-                }
-                {
-                    openNewTaskModal &&
-                    <NewTask
-                        onClose={this.toggleNewTaskModal}
-                        onAdd={this.addTask}
-                    />
-                }
-                {
-                    editTask &&
-                    <EditTaskModal
-                        data={editTask}
-                        onClose={() => this.handleEdit(null)}
-                        onSave={this.handleSaveTask}
-                    />
-                }
-            </div>
-        );
+                            </Col>
+                        </Row>
+                        <Row className="justify-content-center">
+                            {taskComponents}
+                        </Row>
+                    </Container>
+                    {showConfirm &&
+                        <Confirm
+                            onClose={this.toggleConfirm}
+                            onConfirm={this.removeSelected}
+                            count={selectedTasks.size}
+                        />
+                    }
+                    {
+                        openNewTaskModal &&
+                        <NewTask
+                            onClose={this.toggleNewTaskModal}
+                            onAdd={this.addTask}
+                        />
+                    }
+                    {
+                        editTask &&
+                        <EditTaskModal
+                            data={editTask}
+                            onClose={() => this.handleEdit(null)}
+                            onSave={this.handleSaveTask}
+                        />
+                    }
+                </div>
+            );
+        }
     }
-}
-
 
