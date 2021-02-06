@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button} from 'react-bootstrap';
 import Task from '../Task/Task';
-import NewTask from '../NewTask/NewTask'
+import NewTask from '../NewTask/NewTask';
+import Confirm from '../Confirm';
 
 export default class Todo extends Component {
     state = {
         tasks: [],
-        selectedTasks:new Set()
+        selectedTasks:new Set(),
+        showConfirm:false
     };
 
 
@@ -51,14 +53,19 @@ export default class Todo extends Component {
             });
      this.setState({
          tasks:newTasks,
-         selectedTasks:new Set()
+         selectedTasks:new Set(),
+         showConfirm:false
      });
     };
 
-   
+   toggleConfirm=()=>{
+       this.setState({
+           showConfirm:!this.state.showConfirm
+       })
+   }
 
     render() {
-        const { tasks, selectedTasks } = this.state;
+        const { tasks, selectedTasks, showConfirm } = this.state;
 
         const taskComponents = tasks.map((task) => {
 
@@ -95,7 +102,7 @@ export default class Todo extends Component {
                     <Row>
                         <Button
                             variant="danger"
-                            onClick={this.removeSelected}
+                            onClick={this.toggleConfirm}
                             disabled={!selectedTasks.size}
                         >
                             Delete selected
@@ -106,6 +113,13 @@ export default class Todo extends Component {
                         {taskComponents}
                     </Row>
                 </Container>
+                {showConfirm && 
+                    <Confirm
+                    onClose={this.toggleConfirm}
+                    onConfirm={this.removeSelected}
+                    count={selectedTasks.size}
+                />
+                }  
             </div>
         );
     }
