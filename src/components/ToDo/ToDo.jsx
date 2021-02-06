@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button} from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../Task/Task';
 import NewTask from '../NewTask/NewTask';
 import Confirm from '../Confirm';
+import EditTaskModal from '../EditTaskModal';
 
 export default class Todo extends Component {
     state = {
         tasks: [],
-        selectedTasks:new Set(),
-        showConfirm:false
+        selectedTasks: new Set(),
+        showConfirm: false,
+        openNewTaskModal: false,
+        editTask: null
     };
 
 
     addTask = (newTask) => {
-    
+
         const tasks = [...this.state.tasks, newTask];
 
 
         this.setState({
-            tasks
+            tasks,
+            openNewTaskModal: false
         });
     };
 
@@ -30,9 +34,9 @@ export default class Todo extends Component {
         });
     };
 
-    toggleTask=(taskId) => {
-        const selectedTasks=new Set(this.state.selectedTasks)
-        if (selectedTasks.has(taskId)){
+    toggleTask = (taskId) => {
+        const selectedTasks = new Set(this.state.selectedTasks)
+        if (selectedTasks.has(taskId)) {
             selectedTasks.delete(taskId);
         }
         else {
@@ -43,29 +47,62 @@ export default class Todo extends Component {
         });
     };
 
-    removeSelected=()=> {
-        const{tasks,selectedTasks}=this.state;
-        const newTasks=tasks.filter((task)=>{
-            if(selectedTasks.has(task._id)) {
+    removeSelected = () => {
+        const { tasks, selectedTasks } = this.state;
+        const newTasks = tasks.filter((task) => {
+            if (selectedTasks.has(task._id)) {
                 return false;
             }
             return true;
-            });
-     this.setState({
-         tasks:newTasks,
-         selectedTasks:new Set(),
-         showConfirm:false
-     });
+        });
+        this.setState({
+            tasks: newTasks,
+            selectedTasks: new Set(),
+            showConfirm: false
+        });
     };
 
-   toggleConfirm=()=>{
-       this.setState({
-           showConfirm:!this.state.showConfirm
-       })
-   }
+    toggleConfirm = () => {
+        this.setState({
+            showConfirm: !this.state.showConfirm
+        })
+    }
+
+    selectAll = () => {
+        const taskIds = this.state.tasks.map((task) => task._id);
+        this.setState({
+            selectedTasks: new Set(taskIds)
+        });
+    };
+
+    deSelectAll = () => {
+        this.setState({
+            selectedTasks: new Set()
+        });
+    };
+
+    toggleNewTaskModal = () => {
+        this.setState({
+            openNewTaskModal: !this.state.openNewTaskModal
+        });
+    };
+
+    handleEdit = (editTask) => {
+        this.setState({ editTask });
+    };
+    handleSaveTask = (editedTask) => {
+        const tasks = [...this.state.tasks];
+        const foundIndex = tasks.findIndex((task) => task._id === editedTask._id);
+        tasks[foundIndex] = editedTask;
+
+        this.setState({
+            tasks,
+            editTask: null
+        });
+    };
 
     render() {
-        const { tasks, selectedTasks, showConfirm } = this.state;
+        const { tasks, selectedTasks, showConfirm, openNewTaskModal, editTask } = this.state;
 
         const taskComponents = tasks.map((task) => {
 
@@ -78,11 +115,13 @@ export default class Todo extends Component {
                     lg={3}
                     xl={2}
                 >
-                <Task data={task}
-                onToggle={this.toggleTask}
-                disabled={!!selectedTasks.size}
-                onDelete={this.deleteTask}
-                />
+                    <Task data={task}
+                        onToggle={this.toggleTask}
+                        disabled={!!selectedTasks.size}
+                        onDelete={this.deleteTask}
+                        selected={selectedTasks.has(task._id)}
+                        onEdit={this.handleEdit}
+                    />
                 </Col>
             )
         });
@@ -92,35 +131,68 @@ export default class Todo extends Component {
                 <h2>ToDo List</h2>
                 <Container>
                     <Row className="justify-content-center">
-                        <Col xs={10}>
-                        <NewTask
-                        disabled = {!!selectedTasks.size}
-                        onAdd = {this.addTask}
-                        />
+                        <Col>
+                            <Button
+                                variant="primary"
+                                onClick={this.toggleNewTaskModal}>
+                                Add new Task
+                    </Button>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Button
-                            variant="danger"
-                            onClick={this.toggleConfirm}
-                            disabled={!selectedTasks.size}
-                        >
-                            Delete selected
+                        <Col>
+                            <Button
+                                variant="warning"
+                                onClick={this.selectAll}
+                            >
+                                Select All
+                    </Button>
+                        </Col>
+                        <Col>
+                            <Button
+                                variant="warning"
+                                onClick={this.deSelectAll}
+                            >
+                                Deselect All
+                    </Button>
+                        </Col>
+                        <Col>
+                            <Button
+                                variant="danger"
+                                onClick={this.toggleConfirm}
+                                disabled={!selectedTasks.size}
+                            >
+                                Delete selected
                         </Button>
-
+                        </Col>
                     </Row>
                     <Row className="justify-content-center">
                         {taskComponents}
                     </Row>
                 </Container>
-                {showConfirm && 
+                {showConfirm &&
                     <Confirm
-                    onClose={this.toggleConfirm}
-                    onConfirm={this.removeSelected}
-                    count={selectedTasks.size}
-                />
-                }  
+                        onClose={this.toggleConfirm}
+                        onConfirm={this.removeSelected}
+                        count={selectedTasks.size}
+                    />
+                }
+                {
+                    openNewTaskModal &&
+                    <NewTask
+                        onClose={this.toggleNewTaskModal}
+                        onAdd={this.addTask}
+                    />
+                }
+                {
+                    editTask &&
+                    <EditTaskModal
+                        data={editTask}
+                        onClose={() => this.handleEdit(null)}
+                        onSave={this.handleSaveTask}
+                    />
+                }
             </div>
         );
     }
 }
+
+

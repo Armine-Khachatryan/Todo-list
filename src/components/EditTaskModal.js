@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
-import idGenerator from '../../heplers/idGenerator';
-import PropTypes from "prop-types";
-//import styles from './newTaskStyle.module.css';
+import PropTypes from 'prop-types';
 
-class NewTask extends Component {
-    state = {
-        title: " ",
-        description: ""
+class EditTaskModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...props.data
+        };
     }
-
     handleChange = (event) => {
         const { name, value } = event.target;
+
         this.setState({
             [name]: value
         });
     };
 
-
     handleKeyDown = (event) => {
         if (event.key === "Enter") {
             this.handleSubmit();
-        };
+        }
     };
 
     handleSubmit = () => {
@@ -31,20 +30,16 @@ class NewTask extends Component {
         if (!title) {
             return;
         }
-
-        const newTask = {
-            _id: idGenerator(),
+        this.props.onSave({
+            _id: this.state._id,
             title,
             description
-        };
-
-        this.props.onAdd(newTask);
+        });
     };
-
-
 
     render() {
         const { onClose } = this.props;
+        const { title, description } = this.state;
 
         return (
             <Modal
@@ -56,14 +51,16 @@ class NewTask extends Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Add new Task
-    </Modal.Title>
+                        Edit Task
+            </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+
                     <FormControl
                         placeholder="Title"
                         onChange={this.handleChange}
                         name='title'
+                        value={title}
                         onKeyPress={this.handleKeyDown}
                         className='mb-3'
                     />
@@ -72,24 +69,28 @@ class NewTask extends Component {
                         as="textarea"
                         rows={5}
                         name='description'
+                        value={description}
                         onChange={this.handleChange}
                     />
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
                         onClick={this.handleSubmit}
                         variant='success'
                     >
-                        Add
+                        Save
             </Button>
                     <Button onClick={onClose}>Cancel</Button>
                 </Modal.Footer>
             </Modal>
-        )
+        );
     }
 }
-NewTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
-}
-export default NewTask;
+EditTaskModal.propTypes = {
+    data: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired
+};
+
+export default EditTaskModal;
