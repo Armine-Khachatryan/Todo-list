@@ -5,6 +5,7 @@ import NewTask from '../NewTask/NewTask';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
 
+
 export default class Todo extends Component {
     state = {
         tasks: [],
