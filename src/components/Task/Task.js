@@ -4,7 +4,7 @@ import styles from './taskStyle.module.css';
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { formatDate } from '../../heplers/utils';
+import { formatDate, textTruncate } from '../../heplers/utils';
 import {Link} from 'react-router-dom';
 
 class Task extends PureComponent {
@@ -27,11 +27,11 @@ class Task extends PureComponent {
                         type="checkbox"
                         onChange={this.handleChange}
                         checked={this.props.selected} />
-                        <Link to='/task'>
-                    <Card.Title>{task.title}</Card.Title>
+                        <Link to={`/task/${task._id}`}>
+                    <Card.Title>{textTruncate(task.title,25)}</Card.Title>
                     </Link>
                     <Card.Text>
-                        Description: {task.description}
+                        Description: {textTruncate(task.description,60)}
                     </Card.Text>
                     <Card.Text>
                         Date: {formatDate(task.date)}
