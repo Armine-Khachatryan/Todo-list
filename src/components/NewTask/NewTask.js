@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
@@ -7,12 +7,19 @@ import { formatDate } from '../../heplers/utils';
 //import styles from './newTaskStyle.module.css';
 
 class NewTask extends Component {
-    state = {
-        title: " ",
-        description: "",
-        date: new Date()
-    };
+    constructor(props) {
+        super(props);
+        this.inputRef = createRef();
+        this.state = {
+            title: " ",
+            description: "",
+            date: new Date()
+        };
+    }
 
+    componentDidMount() {
+        this.inputRef.current.focus();
+    };
     handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({
@@ -71,6 +78,7 @@ class NewTask extends Component {
                 <Modal.Body>
                     <FormControl
                         placeholder="Title"
+                        ref={this.inputRef}
                         onChange={this.handleChange}
                         name='title'
                         onKeyPress={this.handleKeyDown}
