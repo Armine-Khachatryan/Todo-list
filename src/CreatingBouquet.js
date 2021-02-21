@@ -1,6 +1,6 @@
 import React from 'react';
-import Color from '../Color';
-import Flower from '../Flower';
+import Color from './Color';
+import Flower from './Flower';
 function CreatingBouquet (props){
     return (
         <div>

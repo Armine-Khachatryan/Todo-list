@@ -6,6 +6,8 @@ function ShowCount(props){
     return(
         <h2>
         Count: {props.value}
+        <br/>
+        Message: {props.message}
         </h2>
     );
 }
@@ -13,8 +15,11 @@ function ShowCount(props){
 const mapStateToProps = (state)=>{
 return {
     value: state.count,
+    message: state.message
+};
 };
 
-};
 
 export default connect(mapStateToProps)(ShowCount);
+
+
