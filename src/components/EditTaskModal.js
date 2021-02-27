@@ -1,14 +1,15 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDate } from '../heplers/utils';
+import { editTask } from '../store/actions';
+import { connect } from 'react-redux';
 
 class EditTaskModal extends Component {
     constructor(props) {
         super(props);
-        this.inputRef=createRef();
         const { date } = props.data;
         this.state = {
             ...props.data,
@@ -16,10 +17,7 @@ class EditTaskModal extends Component {
         };
     }
 
-    componentDidMount(){
-        this.inputRef.current.focus();
-    };
-    
+
     handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -41,7 +39,7 @@ class EditTaskModal extends Component {
         if (!title) {
             return;
         }
-        this.props.onSave({
+        this.props.editTask({
             _id: this.state._id,
             title,
             description,
@@ -49,7 +47,7 @@ class EditTaskModal extends Component {
         });
     };
 
-   
+
 
 
     handleChangeDate = (value) => {
@@ -80,7 +78,6 @@ class EditTaskModal extends Component {
 
                     <FormControl
                         placeholder="Title"
-                        ref={this.inputRef}
                         onChange={this.handleChange}
                         name='title'
                         value={title}
@@ -116,8 +113,10 @@ class EditTaskModal extends Component {
 }
 EditTaskModal.propTypes = {
     data: PropTypes.object.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired
+};
+const mapDispatchToProps = {
+    editTask
 };
 
-export default EditTaskModal;
+export default connect(null, mapDispatchToProps)(EditTaskModal);

@@ -1,25 +1,21 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDate } from '../../heplers/utils';
-//import styles from './newTaskStyle.module.css';
+import { connect } from 'react-redux';
+import { addTask } from '../../store/actions';
+
 
 class NewTask extends Component {
-    constructor(props) {
-        super(props);
-        this.inputRef = createRef();
-        this.state = {
-            title: " ",
-            description: "",
-            date: new Date()
-        };
-    }
-
-    componentDidMount() {
-        this.inputRef.current.focus();
+    state = {
+        title: " ",
+        description: "",
+        date: new Date()
     };
+
+
     handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({
@@ -49,7 +45,7 @@ class NewTask extends Component {
             date: formatDate(date.toISOString())
         };
 
-        this.props.onAdd(newTask);
+        this.props.addTask(newTask);
     };
 
     handleChangeDate = (value) => {
@@ -64,6 +60,7 @@ class NewTask extends Component {
 
         return (
             <Modal
+            className={this.props.className}
                 show={true}
                 onHide={onClose}
                 size="lg"
@@ -78,7 +75,6 @@ class NewTask extends Component {
                 <Modal.Body>
                     <FormControl
                         placeholder="Title"
-                        ref={this.inputRef}
                         onChange={this.handleChange}
                         name='title'
                         onKeyPress={this.handleKeyDown}
@@ -111,7 +107,11 @@ class NewTask extends Component {
     }
 }
 NewTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
-}
-export default NewTask;
+    onClose: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+    addTask
+};
+
+export default connect(null, mapDispatchToProps)(NewTask);
