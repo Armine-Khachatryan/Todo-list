@@ -5,7 +5,7 @@ import NewTask from '../NewTask/NewTask';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
 import { connect } from 'react-redux';
-import { getTasks, deleteTask, deleteTasks, editTask } from '../../store/actions'
+import { getTasks, deleteTask, deleteTasks} from '../../store/actions'
 
 class ToDo extends Component {
     state = {
@@ -65,7 +65,7 @@ class ToDo extends Component {
     }
 
     selectAll = () => {
-        const taskIds = this.state.tasks.map((task) => task._id);
+        const taskIds = this.props.tasks.map((task) => task._id);
         this.setState({
             selectedTasks: new Set(taskIds)
         });

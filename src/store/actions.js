@@ -6,7 +6,6 @@ export function getTasks() {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.PENDING });
-
         request('http://localhost:3001/task')
             .then((tasks) => {
                 dispatch({ type: actionTypes.GET_TASKS, tasks: tasks });

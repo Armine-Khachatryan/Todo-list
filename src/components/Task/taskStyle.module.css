@@ -1,8 +1,13 @@
 .task{
-    margin:10px 0;
-    height:100%
+    margin:10px 0px;
+    height:100%;
 }
 
 .selected{
     border:1px solid red !important;
+}
+
+.allCards{
+    margin: 10px  10px 10px 10px;
+    
 }
