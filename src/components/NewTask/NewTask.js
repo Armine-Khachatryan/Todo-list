@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDate } from '../../heplers/utils';
-//import styles from './newTaskStyle.module.css';
+import { connect } from 'react-redux';
+import { addTask } from '../../store/actions';
+
 
 class NewTask extends Component {
     state = {
@@ -12,6 +14,7 @@ class NewTask extends Component {
         description: "",
         date: new Date()
     };
+
 
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -42,7 +45,7 @@ class NewTask extends Component {
             date: formatDate(date.toISOString())
         };
 
-        this.props.onAdd(newTask);
+        this.props.addTask(newTask);
     };
 
     handleChangeDate = (value) => {
@@ -57,6 +60,7 @@ class NewTask extends Component {
 
         return (
             <Modal
+            className={this.props.className}
                 show={true}
                 onHide={onClose}
                 size="lg"
@@ -103,7 +107,11 @@ class NewTask extends Component {
     }
 }
 NewTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
-}
-export default NewTask;
+    onClose: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+    addTask
+};
+
+export default connect(null, mapDispatchToProps)(NewTask);

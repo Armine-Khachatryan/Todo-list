@@ -20,7 +20,8 @@ class Task extends PureComponent {
 
 
         return (
-            <Card className={`${styles.task} ${selected ? styles.selected : " "}`}>
+            <div className={styles.allCards}>
+            <Card style={{height: "(100% - 20px"}} className={`${styles.task} ${selected ? styles.selected : " "}`}>
 
                 <Card.Body>
                     <input
@@ -55,6 +56,7 @@ class Task extends PureComponent {
                     </Button>
                 </Card.Body>
             </Card>
+            </div>
         )
     }
 }
