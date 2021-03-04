@@ -163,12 +163,16 @@ function Search(props) {
             {
                 dateOptions.map((option, index) => (
                     <div className={styles.dateOptions}>
-                        <span>{option.label} </span>
+                        <span style={{width: "fixed"}} >{option.label} </span>
+                        <br>
+                        </br>
+                        <span>
                         <DatePicker
                             key={index}
                             selected={dates[option.value]}
                             onChange={(value) => handleChangeDate(value, option.value)}
                         />
+                        </span>
                     </div>
                 ))
             }
