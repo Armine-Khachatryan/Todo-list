@@ -7,11 +7,12 @@ import Contact from './components/pages/Contact/Contact';
 import NotFound from './components/pages/NotFound/NotFound';
 import NavMenu from './components/NavMenu/NavMenu';
 import SingleTask from './components/pages/SingleTask/SingleTask';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import {Router, Route, Switch, Redirect } from 'react-router-dom';
 import Spinner from './components/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {history} from './heplers/history';
 
 const toastProps = {
   position: "bottom-left",
@@ -38,9 +39,8 @@ function App({loading, successMessage, errorMessage}) {
 
   return (
     <div className="App">
-
-      <BrowserRouter>
-        <NavMenu />
+    <Router history={history}>
+ <NavMenu />
         <Switch>
           <Route
             path='/'
@@ -74,7 +74,7 @@ function App({loading, successMessage, errorMessage}) {
           />
           <Redirect to='/not-found' />
         </Switch>
-      </BrowserRouter>
+      </Router>
       { loading && <Spinner />}
       <ToastContainer />
 

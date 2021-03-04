@@ -4,6 +4,7 @@ import Task from '../Task/Task';
 import NewTask from '../NewTask/NewTask';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
+import Search from '../Search/Search'
 import { connect } from 'react-redux';
 import { getTasks, deleteTask, deleteTasks} from '../../store/actions'
 
@@ -152,6 +153,11 @@ class ToDo extends Component {
             <div>
                 <h2>ToDo List</h2>
                 <Container>
+                    <Row>
+                        <Col >
+                            <Search />
+                        </Col>
+                    </Row>
                     <Row className="justify-content-center">
                         <Col>
                             <Button
