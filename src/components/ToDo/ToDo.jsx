@@ -8,6 +8,8 @@ import Search from '../Search/Search'
 import { connect } from 'react-redux';
 import { getTasks, deleteTask, deleteTasks} from '../../store/actions'
 
+
+
 class ToDo extends Component {
     state = {
         selectedTasks: new Set(),

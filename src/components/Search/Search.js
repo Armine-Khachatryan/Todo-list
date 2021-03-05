@@ -4,6 +4,8 @@ import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react
 import { textTruncate } from '../../heplers/utils';
 import DatePicker from "react-datepicker";
 import styles from './SearchStyle.module.css';
+import {formatDate} from '../../heplers/utils';
+import {getTasks} from '../../store/actions';
 
 
 const statusOptions = [
@@ -71,7 +73,7 @@ const dateOptions = [
     }
 ];
 
-function Search(props) {
+function Search({getTasks}) {
 
     const [status, setStatus] = useState({
         value: ''
@@ -97,13 +99,24 @@ function Search(props) {
         });
     };
 
-    const handleSubmit = () => {
-        console.log('search', search);
-        console.log('sort', sort);
-        console.log('status', status);
-        console.log('dates', dates);
+    const handleSubmit = ()=>{
+        const params = {};
+        search && (params.search = search);
+        sort.value && (params.sort = sort.value);
+        status.value && (params.status = status.value);
+        for(let key in dates){
+            const value = dates[key];
+            if(value){
+             const date = formatDate(value.toISOString());
+             params[key] = date;
+            }
+        }
+        getTasks(params);
+     };
+ 
 
-    };
+
+
 
     return (
         <div className="mb-3">
@@ -163,7 +176,7 @@ function Search(props) {
             {
                 dateOptions.map((option, index) => (
                     <div className={styles.dateOptions}>
-                        <span style={{width: "fixed"}} >{option.label} </span>
+                        <span>{option.label} </span>
                         <br>
                         </br>
                         <span>
@@ -180,4 +193,8 @@ function Search(props) {
     )
 }
 
-export default connect()(Search);
+const mapDispatchToProps = {
+    getTasks
+  };
+
+export default connect(null, mapDispatchToProps)(Search);
