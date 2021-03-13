@@ -163,30 +163,28 @@ class ToDo extends Component {
                     <Row className="justify-content-center">
                         <Col>
                             <Button
-                                variant="primary"
+                                variant="secondary"
                                 onClick={this.toggleNewTaskModal}>
                                 Add new Task
                     </Button>
                         </Col>
                         <Col>
                             <Button
-                                variant="warning"
+                                style={{backgroundColor: "#b49e8e" }}
                                 onClick={this.selectAll}
                             >
                                 Select All
                     </Button>
                         </Col>
                         <Col>
-                            <Button
-                                variant="warning"
-                                onClick={this.deSelectAll}
+                            <Button style={{backgroundColor: "#b49e8e" }}
+                             onClick={this.deSelectAll}
                             >
                                 Deselect All
                     </Button>
                         </Col>
                         <Col>
-                            <Button
-                                variant="danger"
+                            <Button style={{backgroundColor: "#53142c" }}
                                 onClick={this.toggleConfirm}
                                 disabled={!selectedTasks.size}
                             >

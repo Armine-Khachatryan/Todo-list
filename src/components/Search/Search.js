@@ -128,7 +128,7 @@ function Search({getTasks}) {
                 <DropdownButton
                     className={styles.button}
                     as={InputGroup.Prepend}
-                    variant="outline-primary"
+                    variant="outline-dark"
                     title={status.value ? status.label : 'Status'}
                     id="input-group-dropdown-1"
                 >
@@ -147,7 +147,7 @@ function Search({getTasks}) {
                 <DropdownButton
                     className={styles.button}
                     as={InputGroup.Prepend}
-                    variant="outline-primary"
+                    variant="outline-dark"
                     title={sort.value ? textTruncate(sort.label, 6) : 'Sort'}
                     id="input-group-dropdown-1"
                 >
@@ -167,7 +167,7 @@ function Search({getTasks}) {
 
                     <Button
                         className={styles.button}
-                        variant="outline-primary"
+                        variant="outline-dark"
                         onClick={handleSubmit}
                     >
                         Search</Button>
@@ -175,13 +175,13 @@ function Search({getTasks}) {
             </InputGroup>
             {
                 dateOptions.map((option, index) => (
-                    <div className={styles.dateOptions}>
+                    <div className={styles.dateOptions}
+                    key ={index}>
                         <span>{option.label} </span>
                         <br>
                         </br>
                         <span>
                         <DatePicker
-                            key={index}
                             selected={dates[option.value]}
                             onChange={(value) => handleChangeDate(value, option.value)}
                         />
