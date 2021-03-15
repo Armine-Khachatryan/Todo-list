@@ -58,25 +58,29 @@ export default function reducer(state = defaultState, action) {
       };
     }
     case actionTypes.DELETE_TASK:{
-
+      if(action.from === 'single'){
+        return {
+          ...state,
+          task: null,
+          loading: false,
+          successMessage: 'Task deleted successfully!'
+        };
+      }
       const newTasks = state.tasks.filter((task) => action.taskId !== task._id);
       return {
         ...state,
         tasks: newTasks,
         loading: false,
-        successMessage:'Task deleted successfully!'
+        successMessage: 'Task deleted successfully!'
       };
     }
-
     case actionTypes.DELETE_TASKS:{
-
       const newTasks = state.tasks.filter((task) => {
         if (action.taskIds.has(task._id)) {
             return false;
         }
         return true;
     });
-
       return {
         ...state,
         tasks: newTasks,
@@ -94,13 +98,10 @@ export default function reducer(state = defaultState, action) {
           loading: false,
           successMessage: 'Task edited successfully!'
         };
-
       }
-
       const tasks = [...state.tasks];
       const foundIndex = tasks.findIndex((task) => task._id === action.editedTask._id);
       tasks[foundIndex] = action.editedTask;
-     
       return {
         ...state,
         tasks,
