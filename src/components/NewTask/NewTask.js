@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef} from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
@@ -9,11 +9,19 @@ import { addTask } from '../../store/actions';
 
 
 class NewTask extends Component {
-    state = {
+    constructor(props) {
+    super(props);
+    this.state = {
         title: " ",
         description: "",
         date: new Date()
     };
+    this.inputRef=createRef();
+}
+
+    componentDidMount(){
+        this.inputRef.current.focus();
+    }
 
 
     handleChange = (event) => {
@@ -77,6 +85,7 @@ class NewTask extends Component {
                         placeholder="Title"
                         onChange={this.handleChange}
                         name='title'
+                        ref={this.inputRef}
                         onKeyPress={this.handleKeyDown}
                         className='mb-3'
                     />
