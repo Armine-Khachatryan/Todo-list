@@ -8,6 +8,8 @@ import Search from '../Search/Search'
 import { connect } from 'react-redux';
 import { getTasks, deleteTask, deleteTasks} from '../../store/actions'
 
+
+
 class ToDo extends Component {
     state = {
         selectedTasks: new Set(),
@@ -160,31 +162,31 @@ class ToDo extends Component {
                     </Row>
                     <Row className="justify-content-center">
                         <Col>
-                            <Button
-                                variant="primary"
+                            <Button 
+                            style={{backgroundColor: "#6ea9af" }}
+                                
                                 onClick={this.toggleNewTaskModal}>
                                 Add new Task
                     </Button>
                         </Col>
                         <Col>
                             <Button
-                                variant="warning"
+                                style={{backgroundColor: "#008b8b" }}
                                 onClick={this.selectAll}
                             >
                                 Select All
                     </Button>
                         </Col>
                         <Col>
-                            <Button
-                                variant="warning"
-                                onClick={this.deSelectAll}
+                            <Button style={{backgroundColor: "#008b8b" }}
+                             onClick={this.deSelectAll}
                             >
                                 Deselect All
                     </Button>
                         </Col>
                         <Col>
                             <Button
-                                variant="danger"
+                            style={{backgroundColor: "#8b0000" }}
                                 onClick={this.toggleConfirm}
                                 disabled={!selectedTasks.size}
                             >

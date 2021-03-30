@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+
 const defaultState = {
   tasks: [],
   task: null,

@@ -1,12 +1,13 @@
 .arm {
-    background-color: #0693e3;
+    background-color: #ddd9da;
 }
 .button{
-    background-color:#f8bb38
+    background-color: #d4cacb
 }
 
 .dateOptions{
-    background-color: rgb(250, 126, 163);
+    background-color: #f5f0e2;
+    
     padding: 2px;
     margin-top: 5px;
     text-align: left;

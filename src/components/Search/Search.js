@@ -4,6 +4,8 @@ import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react
 import { textTruncate } from '../../heplers/utils';
 import DatePicker from "react-datepicker";
 import styles from './SearchStyle.module.css';
+import {formatDate} from '../../heplers/utils';
+import {getTasks} from '../../store/actions';
 
 
 const statusOptions = [
@@ -71,7 +73,7 @@ const dateOptions = [
     }
 ];
 
-function Search(props) {
+function Search({getTasks}) {
 
     const [status, setStatus] = useState({
         value: ''
@@ -97,13 +99,24 @@ function Search(props) {
         });
     };
 
-    const handleSubmit = () => {
-        console.log('search', search);
-        console.log('sort', sort);
-        console.log('status', status);
-        console.log('dates', dates);
+    const handleSubmit = ()=>{
+        const params = {};
+        search && (params.search = search);
+        sort.value && (params.sort = sort.value);
+        status.value && (params.status = status.value);
+        for(let key in dates){
+            const value = dates[key];
+            if(value){
+             const date = formatDate(value.toISOString());
+             params[key] = date;
+            }
+        }
+        getTasks(params);
+     };
+ 
 
-    };
+
+
 
     return (
         <div className="mb-3">
@@ -115,7 +128,7 @@ function Search(props) {
                 <DropdownButton
                     className={styles.button}
                     as={InputGroup.Prepend}
-                    variant="outline-primary"
+                    variant="outline-dark"
                     title={status.value ? status.label : 'Status'}
                     id="input-group-dropdown-1"
                 >
@@ -134,7 +147,7 @@ function Search(props) {
                 <DropdownButton
                     className={styles.button}
                     as={InputGroup.Prepend}
-                    variant="outline-primary"
+                    variant="outline-dark"
                     title={sort.value ? textTruncate(sort.label, 6) : 'Sort'}
                     id="input-group-dropdown-1"
                 >
@@ -154,7 +167,7 @@ function Search(props) {
 
                     <Button
                         className={styles.button}
-                        variant="outline-primary"
+                        variant="outline-dark"
                         onClick={handleSubmit}
                     >
                         Search</Button>
@@ -162,13 +175,13 @@ function Search(props) {
             </InputGroup>
             {
                 dateOptions.map((option, index) => (
-                    <div className={styles.dateOptions}>
-                        <span style={{width: "fixed"}} >{option.label} </span>
+                    <div className={styles.dateOptions}
+                    key ={index}>
+                        <span>{option.label} </span>
                         <br>
                         </br>
                         <span>
                         <DatePicker
-                            key={index}
                             selected={dates[option.value]}
                             onChange={(value) => handleChangeDate(value, option.value)}
                         />
@@ -180,4 +193,8 @@ function Search(props) {
     )
 }
 
-export default connect()(Search);
+const mapDispatchToProps = {
+    getTasks
+  };
+
+export default connect(null, mapDispatchToProps)(Search);
