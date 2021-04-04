@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ToDo from './components/ToDo/ToDo';
+import ToDo from './components/pages/ToDo/ToDo';
 import About from './components/pages/About/About';
 import Contact from './components/pages/Contact/Contact';
 import NotFound from './components/pages/NotFound/NotFound';
@@ -14,7 +14,8 @@ import Spinner from './components/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { history } from './heplers/history';
+import { history } from './helpers/history';
+import Footer from './components/Footer/Footer';
 import AuthRoute from './components/AuthRoute';
 
 const toastProps = {
@@ -97,7 +98,7 @@ function App({ loading, successMessage, errorMessage}) {
       </Router>
       { loading && <Spinner />}
       <ToastContainer />
-
+      <Footer/>
     </div>
   );
 }

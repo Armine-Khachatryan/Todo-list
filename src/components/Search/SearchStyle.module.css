@@ -1,9 +1,21 @@
 .arm {
+    background-color: #db6c6c;
+}
+.button{
+    background-color: #db6c6c;
+}
+
+.dateOptions{
+    background-color: #db6c6c;
+    display: inline-flex;
+    flex-direction:column;
     padding: 2px;
-    margin-top: 5px;
+    margin-top: 6px;
     text-align: left;
 }
 
 .option{
     padding-left: 30px;
 }
+
+

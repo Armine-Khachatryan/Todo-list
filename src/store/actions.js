@@ -1,8 +1,8 @@
-import request from '../heplers/request';
-import requestWithoutToken from '../heplers/auth';
+import request from '../helpers/request';
+import requestWithoutToken from '../helpers/auth';
 import * as actionTypes from './actionTypes';
-import { history } from '../heplers/history';
-import {saveToken} from '../heplers/auth';
+import { history } from '../helpers/history';
+import {saveToken} from '../helpers/auth';
 
 const apiHost = process.env.REACT_APP_API_HOST;
 
@@ -162,6 +162,42 @@ export function login(data) {
             });
     }
 }
+
+export function contact (data){
+    return function (dispatch) {
+        dispatch({ type: actionTypes.PENDING });
+        requestWithoutToken(`${apiHost}/form`, 'POST', data)
+            .then(() =>  {
+                dispatch({ 
+                type: actionTypes.CONTACT_SUCCESS, 
+            });
+        })
+            .catch((err) => {
+                dispatch({
+                    type: actionTypes.ERROR,
+                    error: err.message
+                });
+            });
+    }
+}
+
+export function getUser() {
+    return (dispatch) => {
+        dispatch({ type: actionTypes.PENDING });
+        request(`${apiHost}/user`)
+        .then((user) => {
+            if(!user)  return;
+                dispatch({ type: actionTypes.GET_USER, user: user });
+            })
+            .catch((err) => {
+                dispatch({
+                    type: actionTypes.ERROR,
+                    error: err.message
+                });
+            });
+    }
+}
+
 
 
 

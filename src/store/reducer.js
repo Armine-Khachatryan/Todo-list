@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import {checkLoginStatus} from '../heplers/auth';
+import {checkLoginStatus} from '../helpers/auth';
 
 
 const defaultState = {
@@ -13,7 +13,9 @@ const defaultState = {
   loading:false,
   successMessage:null,
   errorMessage:null,
-  isAuthenticated:checkLoginStatus()
+  isAuthenticated:checkLoginStatus(),
+  sendFormSuccess:false,
+  user:null
 };
 
 
@@ -28,7 +30,9 @@ export default function reducer(state = defaultState, action) {
         editTaskSuccess:false,
         loading:true,
         successMessage: null,
-        errorMessage: null
+        errorMessage: null,
+        sendFormSuccess:false,
+        user:null
       };
     }
     case actionTypes.ERROR:{
@@ -128,7 +132,7 @@ export default function reducer(state = defaultState, action) {
       return {
         ...state,
         loading: false,
-        successMessage: 'Congrats, you are a new user now!!!'
+        successMessage: 'Congrats, you are a new user now!'
       };
     }
 
@@ -139,12 +143,29 @@ export default function reducer(state = defaultState, action) {
         isAuthenticated: true
       };
     }
+
+    case actionTypes.CONTACT_SUCCESS:{
+      return {
+        ...state,
+        loading: false,
+        sendFormSuccess:true,
+        successMessage:'Contact form sent successfully!'
+      };
+    }
     
     case actionTypes.LOGOUT:
         return {
         ...state,
           loading: false,
           isAuthenticated: false
+      }
+
+      case actionTypes.GET_USER:{
+        return {
+          ...state,
+          user: action.user,
+          loading: false
+        };
       }
 
     default: return state;

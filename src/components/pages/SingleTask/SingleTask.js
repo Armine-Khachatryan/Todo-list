@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck, faRedo } from '@fortawesome/free-solid-svg-icons';
-import { formatDate } from '../../../heplers/utils';
+import { formatDate } from '../../../helpers/utils';
 import EditTaskModal from '../../EditTaskModal';
-import {editTask} from '../../../store/actions';
+import { editTask } from '../../../store/actions';
 import { getTask, deleteTask } from '../../../store/actions';
 import { connect } from 'react-redux';
 
@@ -14,12 +14,12 @@ class SingleTask extends Component {
         openEditModal: false
     };
 
-    componentDidMount(){
+    componentDidMount() {
         const taskId = this.props.match.params.taskId;
         this.props.getTask(taskId);
     }
     componentDidUpdate(prevProps) {
-        if (!prevProps.editTaskSuccess && this.props.editTaskSuccess){
+        if (!prevProps.editTaskSuccess && this.props.editTaskSuccess) {
             this.setState({
                 openEditModal: false
             });
@@ -32,14 +32,14 @@ class SingleTask extends Component {
         });
     };
 
-    deleteTask = ()=>{
+    deleteTask = () => {
         const taskId = this.props.match.params.taskId;
         this.props.deleteTask(taskId, 'single');
     }
-    
+
     render() {
         const { openEditModal } = this.state;
-        const {task, editTask, disabled} = this.props;
+        const { task, editTask, disabled } = this.props;
 
         return (
             <div className='mt-5'>
@@ -57,39 +57,39 @@ class SingleTask extends Component {
                                             </Card.Text>
                                             <Card.Text>
                                                 Status: {task.status}
-                                             </Card.Text>
+                                            </Card.Text>
                                             <Card.Text>
                                                 Date: {formatDate(task.date)}
                                             </Card.Text>
-                                            <Card.Text>   
-                Created_at: {formatDate(task.created_at)}
-            </Card.Text>
-            {
-                task.status==="active" ?
-                <Button
-            className='m-1'
-            variant="success"
-            disabled={disabled}
-            onClick={() => editTask({
-                status: 'done',
-                _id: task._id
-            })}
-        >
-            <FontAwesomeIcon icon={faCheck} />
-        </Button> :
-        
-        <Button
-        className='m-1'
-        variant="secondary"
-        disabled={disabled}
-        onClick={() => editTask({
-            status: 'active',
-            _id: task._id
-        })}
-    >
-        <FontAwesomeIcon icon={faRedo} />
-    </Button>
-            }
+                                            <Card.Text>
+                                                Created_at: {formatDate(task.created_at)}
+                                            </Card.Text>
+                                            {
+                                                task.status === "active" ?
+                                                    <Button
+                                                        className='m-1'
+                                                        variant="success"
+                                                        disabled={disabled}
+                                                        onClick={() => editTask({
+                                                            status: 'done',
+                                                            _id: task._id
+                                                        }, 'single')}
+                                                    >
+                                                        <FontAwesomeIcon icon={faCheck} />
+                                                    </Button> :
+
+                                                    <Button
+                                                        className='m-1'
+                                                        variant="secondary"
+                                                        disabled={disabled}
+                                                        onClick={() => editTask({
+                                                            status: 'active',
+                                                            _id: task._id
+                                                        }, 'single')}
+                                                    >
+                                                        <FontAwesomeIcon icon={faRedo} />
+                                                    </Button>
+                                            }
                                             <Button
                                                 className='m-1'
                                                 variant="warning"
@@ -115,10 +115,10 @@ class SingleTask extends Component {
                 {
                     openEditModal &&
                     <EditTaskModal
-                    data={task}
-                    onClose={this.toggleEditModal}
-                    from='single'
-                />
+                        data={task}
+                        onClose={this.toggleEditModal}
+                        from='single'
+                    />
                 }
             </div>
         );

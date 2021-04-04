@@ -1,7 +1,7 @@
 import decode from 'jwt-decode';
 import { store } from '../store/store';
 import { LOGOUT } from '../store/actionTypes';
-import { history } from '../heplers/history';
+import { history } from './history';
 
 export default function requestWithoutToken(url, method = 'GET', body) {
     const config = {
@@ -30,7 +30,6 @@ export default function requestWithoutToken(url, method = 'GET', body) {
             return res;
         });
 }
-
 
 export const getToken = () => {
     const token = localStorage.getItem('token');

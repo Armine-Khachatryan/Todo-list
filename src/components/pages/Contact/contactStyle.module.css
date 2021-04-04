@@ -1,7 +1,19 @@
 .submitButton{
     width: 40%;
+    background-color:#cf4c4c
 }
 
 .invalid, .invalid:focus{
     border: 1px solid red;
 }
+.contact{
+    text-align: center;
+    padding: 20px;
+    font-weight:bold;
+    color:#cf4c4c;
+    font-size: 2em;
+}
+
+.style{
+    min-height: calc(100vh - 56px);;
+    }
