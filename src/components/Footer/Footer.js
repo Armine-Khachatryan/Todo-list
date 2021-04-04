@@ -7,10 +7,16 @@ import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 function Footer() {
   return (
     <div className={styles.footer}>
-      <a href="https://www.linkedin.com/in/armine-khachatryan-a2696a115/">
+      <a 
+      href="https://www.linkedin.com/in/armine-khachatryan-a2696a115/"
+      target="_blank"
+      rel="noopener">
         <FontAwesomeIcon icon={faLinkedin} size="2x" className={styles.social} />
       </a>
-      <a href="https://github.com/Armine-Khachatryan">
+      <a 
+      href="https://github.com/Armine-Khachatryan"
+      target="_blank"
+      rel="noopener">
         <FontAwesomeIcon icon={faGithub} size="2x" className={styles.social} />
       </a>
     </div>

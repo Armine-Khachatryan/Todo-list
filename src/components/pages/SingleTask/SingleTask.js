@@ -42,7 +42,7 @@ class SingleTask extends Component {
         const { task, editTask, disabled } = this.props;
 
         return (
-            <div className='mt-5'>
+            <div style={{marginTop:"30px",  minHeight: "calc(100vh - 56px)"}}>
                 <Container >
                     <Row >
                         <Col xs={12}>
