@@ -51,7 +51,7 @@ function NavMenu(props){
                     {
                         isAuthenticated ?
                         <div>
-                        { user ? <span className={styles.user}>  USER { user.name} { user.surname} </span> : ''}
+                        { user ? <span className={styles.userInfo}>  USER { user.name} { user.surname} </span> : ''}
                             <Button className={styles.logOutButton}
                                 onClick={logout}  >Log out </Button> 
                                 </div>:
