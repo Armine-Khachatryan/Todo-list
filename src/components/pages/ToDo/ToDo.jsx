@@ -177,7 +177,7 @@ class ToDo extends Component {
                                 style={{ backgroundColor: "#008b8b" }}
                                 onClick={this.selectAll}
                             >
-                                Select All
+                                Select  All
                     </Button>
                         </Col>
                         <Col>
