@@ -1,12 +1,12 @@
 .arm {
-    background-color: #db6c6c;
+    background-color: rgb(38, 134, 102);
 }
 .button{
-    background-color: #db6c6c;
+    background-color:rgb(38, 134, 102);
 }
 
 .dateOptions{
-    background-color: #db6c6c;
+    background-color: rgb(38, 134, 102);
     display: inline-flex;
     flex-direction:column;
     padding: 2px;

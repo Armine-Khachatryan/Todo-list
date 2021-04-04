@@ -32,7 +32,6 @@ export default function reducer(state = defaultState, action) {
         successMessage: null,
         errorMessage: null,
         sendFormSuccess:false,
-        user:null
       };
     }
     case actionTypes.ERROR:{
