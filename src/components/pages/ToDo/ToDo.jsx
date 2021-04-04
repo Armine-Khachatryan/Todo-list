@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Task from '../Task/Task';
-import NewTask from '../NewTask/NewTask';
-import Confirm from '../Confirm';
-import EditTaskModal from '../EditTaskModal';
-import Search from '../Search/Search'
+import Task from '../../Task/Task';
+import NewTask from '../../NewTask/NewTask';
+import Confirm from '../../Confirm';
+import EditTaskModal from '../../EditTaskModal';
+import Search from '../../Search/Search';
 import { connect } from 'react-redux';
-import { getTasks, deleteTask, deleteTasks} from '../../store/actions'
+import { getTasks, deleteTask, deleteTasks } from '../../../store/actions';
+import styles from './todo.module.css';
+
 
 
 
@@ -17,9 +19,11 @@ class ToDo extends Component {
         openNewTaskModal: false,
         editTask: null
     };
+
     componentDidMount() {
         this.props.getTasks();
     }
+
     componentDidUpdate(prevProps) {
         if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
             this.setState({
@@ -35,7 +39,7 @@ class ToDo extends Component {
             });
             return;
         }
-        if (!prevProps.editTasksSuccess && this.props.editTasksSuccess){
+        if (!prevProps.editTasksSuccess && this.props.editTasksSuccess) {
             this.setState({
                 editTask: null
             });
@@ -137,7 +141,7 @@ class ToDo extends Component {
                     sm={6}
                     md={4}
                     lg={3}
-                    xl={2}
+                    xl={3}
                 >
                     <Task data={task}
                         onToggle={this.toggleTask}
@@ -152,7 +156,7 @@ class ToDo extends Component {
 
 
         return (
-            <div>
+            <div className={styles.style}>
                 <h2>ToDo List</h2>
                 <Container>
                     <Row>
@@ -163,28 +167,28 @@ class ToDo extends Component {
                     <Row className="justify-content-center">
                         <Col>
                             <Button
-                                 style={{backgroundColor: "#6ea9af" }}
+                                style={{ backgroundColor: "#6ea9af" }}
                                 onClick={this.toggleNewTaskModal}>
                                 Add new Task
                     </Button>
                         </Col>
                         <Col>
                             <Button
-                            style={{backgroundColor: "#008b8b" }}
+                                style={{ backgroundColor: "#008b8b" }}
                                 onClick={this.selectAll}
                             >
                                 Select All
                     </Button>
                         </Col>
                         <Col>
-                            <Button style={{backgroundColor: "#008b8b" }}
-                             onClick={this.deSelectAll}
+                            <Button style={{ backgroundColor: "#008b8b" }}
+                                onClick={this.deSelectAll}
                             >
                                 Deselect All
                     </Button>
                         </Col>
                         <Col>
-                            <Button style={{backgroundColor: "#8b0000" }}
+                            <Button style={{ backgroundColor: "#8b0000" }}
                                 onClick={this.toggleConfirm}
                                 disabled={!selectedTasks.size}
                             >
@@ -196,6 +200,7 @@ class ToDo extends Component {
                         {taskComponents}
                     </Row>
                 </Container>
+
                 {showConfirm &&
                     <Confirm
                         onClose={this.toggleConfirm}
@@ -218,6 +223,8 @@ class ToDo extends Component {
                     />
                 }
             </div>
+
+
         );
     }
 }

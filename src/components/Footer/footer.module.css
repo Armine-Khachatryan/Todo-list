@@ -1,0 +1,12 @@
+.footer{
+margin-top: 1rem;
+background-color: black;
+position:relative;
+bottom: 0;
+left: 0;
+width: 100%
+}
+
+.social{
+    margin: 10px
+}

@@ -1,25 +1,25 @@
-import React, { Component, createRef} from 'react';
+import React, { Component, createRef } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { formatDate } from '../../heplers/utils';
+import { formatDate } from '../../helpers/utils';
 import { connect } from 'react-redux';
 import { addTask } from '../../store/actions';
 
 
 class NewTask extends Component {
     constructor(props) {
-    super(props);
-    this.state = {
-        title: " ",
-        description: "",
-        date: new Date()
-    };
-    this.inputRef=createRef();
-}
+        super(props);
+        this.state = {
+            title: " ",
+            description: "",
+            date: new Date()
+        };
+        this.inputRef = createRef();
+    }
 
-    componentDidMount(){
+    componentDidMount() {
         this.inputRef.current.focus();
     }
 
@@ -68,7 +68,7 @@ class NewTask extends Component {
 
         return (
             <Modal
-            className={this.props.className}
+                className={this.props.className}
                 show={true}
                 onHide={onClose}
                 size="lg"

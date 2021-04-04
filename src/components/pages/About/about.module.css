@@ -1,0 +1,19 @@
+.myStyle{ 
+    font-family: "Arial";
+    text-align:justify;
+    margin: 10px 30px
+  }
+  .heading{
+    font-family: "Arial";
+    padding: 20px;
+    font-weight:bold;
+    color:#cf4c4c
+  }
+  .divStyle{
+    margin-bottom: 100px;
+  }
+
+  .style{
+    min-height: calc(100vh - 56px);;
+    }
+  

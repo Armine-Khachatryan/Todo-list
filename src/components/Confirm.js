@@ -28,6 +28,4 @@ function Confirm(props) {
   )
 }
 
-
-
 export default Confirm;

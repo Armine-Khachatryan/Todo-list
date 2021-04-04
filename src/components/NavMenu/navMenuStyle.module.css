@@ -4,8 +4,16 @@
 }
 
 .marg{
-    margin-left: 10px;
+    margin-left: 15px;
     color: grey;
-    
+}
+
+.logOutButton{
+background-color: #d15353;
+font-weight: bold;
+}
+
+.user{
+    color: red
 }
 

@@ -1,3 +1,18 @@
 .invalid{
     border: 1px solid red;
 }
+
+.linkStyle{
+    color: black
+}
+
+.registerTitle{
+    font-weight: bold;
+    color:#cf4c4c;
+    margin: 80px 0px 20px;
+    font-size: 2em;
+}
+
+.style{
+    min-height: calc(100vh - 56px);;
+    }

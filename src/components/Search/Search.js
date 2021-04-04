@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
-import { textTruncate } from '../../heplers/utils';
+import { textTruncate } from '../../helpers/utils';
 import DatePicker from "react-datepicker";
 import styles from './SearchStyle.module.css';
-import {getTasks} from '../../store/actions';
+import { getTasks } from '../../store/actions';
 
 
 const statusOptions = [
@@ -63,16 +63,16 @@ const dateOptions = [
         value: 'create_gte'
     },
     {
-        label: 'Complete before',
+        label: 'Completed before',
         value: 'complete_lte'
     },
     {
-        label: 'Complete after',
+        label: 'Completed after',
         value: 'complete_gte'
     }
 ];
 
-function Search({getTasks}) {
+function Search({ getTasks }) {
 
     const [status, setStatus] = useState({
         value: ''
@@ -84,7 +84,7 @@ function Search({getTasks}) {
 
     const [search, setSearch] = useState('');
 
-    const[dates, setDates] = useState({
+    const [dates, setDates] = useState({
         create_lte: null,
         create_gte: null,
         complete_lte: null,
@@ -98,30 +98,26 @@ function Search({getTasks}) {
         });
     };
 
-    const handleSubmit = ()=>{
+    const handleSubmit = () => {
         const params = {};
         search && (params.search = search);
         sort.value && (params.sort = sort.value);
         status.value && (params.status = status.value);
-        for(let key in dates){
+        for (let key in dates) {
             const value = dates[key];
-            if(value){
-             const date = value.toLocaleDateString();
-             params[key] = date;
+            if (value) {
+                const date = value.toLocaleDateString();
+                params[key] = date;
             }
         }
         getTasks(params);
-     };
- 
-
-
-
+    };
 
     return (
         <div className="mb-3">
             <InputGroup >
                 <FormControl className={styles.arm}
-                    placeholder="Search" 
+                    placeholder="Search"
                     onChange={(event) => setSearch(event.target.value)}
                 />
                 <DropdownButton
@@ -175,16 +171,12 @@ function Search({getTasks}) {
             {
                 dateOptions.map((option, index) => (
                     <div className={styles.dateOptions}
-                    key ={index}>
-                        <span>{option.label} </span>
-                        <br>
-                        </br>
-                        <span>
-                        <DatePicker
+                        key={index}>
+                        <div className={styles.option}>{option.label} </div>
+                        <DatePicker className={styles.option}
                             selected={dates[option.value]}
                             onChange={(value) => handleChangeDate(value, option.value)}
                         />
-                        </span>
                     </div>
                 ))
             }
@@ -194,6 +186,6 @@ function Search({getTasks}) {
 
 const mapDispatchToProps = {
     getTasks
-  };
+};
 
 export default connect(null, mapDispatchToProps)(Search);
