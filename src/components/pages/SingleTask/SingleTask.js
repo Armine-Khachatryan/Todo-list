@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck, faRedo } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../../heplers/utils';
 import EditTaskModal from '../../EditTaskModal';
+import {editTask} from '../../../store/actions';
 import { getTask, deleteTask } from '../../../store/actions';
 import { connect } from 'react-redux';
 
@@ -38,7 +39,7 @@ class SingleTask extends Component {
     
     render() {
         const { openEditModal } = this.state;
-        const {task} = this.props;
+        const {task, editTask, disabled} = this.props;
 
         return (
             <div className='mt-5'>
@@ -55,8 +56,40 @@ class SingleTask extends Component {
                                                 Description: {task.description}
                                             </Card.Text>
                                             <Card.Text>
+                                                Status: {task.status}
+                                             </Card.Text>
+                                            <Card.Text>
                                                 Date: {formatDate(task.date)}
                                             </Card.Text>
+                                            <Card.Text>   
+                Created_at: {formatDate(task.created_at)}
+            </Card.Text>
+            {
+                task.status==="active" ?
+                <Button
+            className='m-1'
+            variant="success"
+            disabled={disabled}
+            onClick={() => editTask({
+                status: 'done',
+                _id: task._id
+            })}
+        >
+            <FontAwesomeIcon icon={faCheck} />
+        </Button> :
+        
+        <Button
+        className='m-1'
+        variant="secondary"
+        disabled={disabled}
+        onClick={() => editTask({
+            status: 'active',
+            _id: task._id
+        })}
+    >
+        <FontAwesomeIcon icon={faRedo} />
+    </Button>
+            }
                                             <Button
                                                 className='m-1'
                                                 variant="warning"
@@ -100,7 +133,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     getTask,
-    deleteTask
+    deleteTask,
+    editTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

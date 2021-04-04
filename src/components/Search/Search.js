@@ -4,7 +4,6 @@ import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react
 import { textTruncate } from '../../heplers/utils';
 import DatePicker from "react-datepicker";
 import styles from './SearchStyle.module.css';
-import {formatDate} from '../../heplers/utils';
 import {getTasks} from '../../store/actions';
 
 
@@ -107,7 +106,7 @@ function Search({getTasks}) {
         for(let key in dates){
             const value = dates[key];
             if(value){
-             const date = formatDate(value.toISOString());
+             const date = value.toLocaleDateString();
              params[key] = date;
             }
         }
