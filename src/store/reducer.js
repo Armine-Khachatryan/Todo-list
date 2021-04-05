@@ -14,8 +14,7 @@ const defaultState = {
   successMessage:null,
   errorMessage:null,
   isAuthenticated:checkLoginStatus(),
-  sendFormSuccess:false,
-  user:null
+  sendFormSuccess:false
 };
 
 
