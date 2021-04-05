@@ -15,7 +15,6 @@ font-weight: bold;
 
 .userInfo{
     color: white;
-    display:inline-block;
-    margin: 0px
+    display: sticky
 }
 
